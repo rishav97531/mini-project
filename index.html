@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitAI - Your Personal AI Fitness Trainer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --warning: #ffcc00;
+            --danger: #dc3545;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(rgba(67, 97, 238, 0.9), rgba(63, 55, 201, 0.9)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background-color: #3ab0d3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+            border: 1px solid #eaeaea;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        /* Posture Detection Section */
+        .posture-detection {
+            padding: 5rem 2rem;
+            background-color: #f0f4ff;
+        }
+
+        .detection-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .detection-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .detection-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .detection-info p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .video-container {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #2c2c2c, #4a4a4a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .video-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .feedback-panel {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .feedback-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .feedback-message {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Motivational Quotes */
+        .quotes-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .quote-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quote {
+            font-size: 1.8rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .author {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Fitness Goals Section */
+        .fitness-goals {
+            padding: 5rem 2rem;
+            background-color: white;
+        }
+
+        .goals-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .goal-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .goal-card i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .goal-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            color: #6c757d;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* Achievement Notification */
+        .achievement-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1001;
+            animation: slideIn 0.5s ease;
+            max-width: 350px;
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+        }
+
+        .achievement-content h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .achievement-content h3 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .achievement-content p {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-dumbbell"></i>
+            <span>FitAI</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#posture">Posture Detection</a></li>
+                <li><a href="#goals">Fitness Goals</a></li>
+            </ul>
+        </nav>
+        <div class="profile-section">
+            <div class="profile-img" id="profileBtn">JD</div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Transform Your Fitness Journey with AI</h1>
+        <p>Get personalized workout guidance, real-time posture correction, and motivational support from your AI fitness trainer.</p>
+        <button class="cta-button" id="startTrainingBtn">Start Your Training</button>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Why Choose FitAI?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI-Powered Training</h3>
+                <p>Our advanced AI analyzes your movements and provides real-time feedback to optimize your form and prevent injuries.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Personalized Plans</h3>
+                <p>Get customized workout plans based on your fitness level, goals, and progress over time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <h3>Comprehensive Exercises</h3>
+                <p>Access a wide variety of exercises targeting different muscle groups with proper technique guidance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Posture Detection Section -->
+    <section class="posture-detection" id="posture">
+        <h2 class="section-title">Real-Time Posture Detection</h2>
+        <div class="detection-container">
+            <div class="detection-info">
+                <h2>Perfect Your Form with AI Guidance</h2>
+                <p>Our advanced computer vision technology powered by MediaPipe and OpenCV analyzes your movements in real-time to ensure you're performing exercises with proper form.</p>
+                <p>Get instant feedback on your posture, alignment, and movement patterns to maximize effectiveness and prevent injuries.</p>
+                <div class="feedback-panel">
+                    <div class="feedback-title">AI Feedback:</div>
+                    <div class="feedback-message" id="feedbackMessage">
+                        Start your camera to begin posture analysis. The AI will guide you through proper form for each exercise.
+                    </div>
+                </div>
+            </div>
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <i class="fas fa-video"></i>
+                    <p>Camera Feed Will Appear Here</p>
+                    <button class="cta-button" style="margin-top: 1.5rem;" id="startCameraBtn">Start Camera</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Motivational Quotes Section -->
+    <section class="quotes-section">
+        <div class="quote-container">
+            <div class="quote">
+                "The only bad workout is the one that didn't happen."
+            </div>
+            <div class="author">- Unknown</div>
+        </div>
+    </section>
+
+    <!-- Fitness Goals Section -->
+    <section class="fitness-goals" id="goals">
+        <h2 class="section-title">Achieve Your Fitness Goals</h2>
+        <div class="goals-container">
+            <div class="goal-card" data-goal="weight-loss">
+                <i class="fas fa-weight-scale"></i>
+                <h3>Weight Loss</h3>
+                <p>Shed pounds and build lean muscle with customized cardio and strength training.</p>
+            </div>
+            <div class="goal-card" data-goal="muscle-gain">
+                <i class="fas fa-dumbbell"></i>
+                <h3>Muscle Building</h3>
+                <p>Gain strength and size with progressive resistance training programs.</p>
+            </div>
+            <div class="goal-card" data-goal="endurance">
+                <i class="fas fa-person-running"></i>
+                <h3>Endurance Training</h3>
+                <p>Improve your stamina and cardiovascular health with targeted workouts.</p>
+            </div>
+            <div class="goal-card" data-goal="flexibility">
+                <i class="fas fa-child-reaching"></i>
+                <h3>Flexibility & Mobility</h3>
+                <p>Enhance your range of motion and prevent injuries with stretching routines.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">
+                <i class="fas fa-dumbbell"></i>
+                <span>FitAI</span>
+            </div>
+            <p>Your personal AI fitness trainer for a healthier, stronger you.</p>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 FitAI. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Profile Modal -->
+    <div class="modal" id="profileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Your Profile</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" class="form-control" placeholder="30">
+                </div>
+                <div class="form-group">
+                    <label for="height">Height (cm)</label>
+                    <input type="number" id="height" class="form-control" placeholder="175">
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight (kg)</label>
+                    <input type="number" id="weight" class="form-control" placeholder="70">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" class="form-control">
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fitnessGoal">Fitness Goal</label>
+                    <select id="fitnessGoal" class="form-control">
+                        <option value="">Select Goal</option>
+                        <option value="weight-loss">Weight Loss</option>
+                        <option value="muscle-gain">Muscle Building</option>
+                        <option value="endurance">Endurance Training</option>
+                        <option value="flexibility">Flexibility & Mobility</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="injury">Previous Injuries</label>
+                    <textarea id="injury" class="form-control" rows="3" placeholder="Describe any previous injuries or health concerns"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelProfileBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Start Training Modal -->
+    <div class="modal" id="startTrainingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Start Your AI Training</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <p>To begin your AI-powered fitness training, we need to access your camera for posture detection.</p>
+            <p>Make sure you have:</p>
+            <ul style="margin: 1rem 0 1rem 1.5rem;">
+                <li>Good lighting in your workout area</li>
+                <li>Enough space to move freely</li>
+                <li>Camera positioned to capture your full body</li>
+            </ul>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancelTrainingBtn">Not Now</button>
+                <button type="button" class="btn btn-primary" id="confirmTrainingBtn">Start Training</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MediaPipe Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
+
+    <!-- Your JavaScript Files -->
+    <script>
+        // Main website functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const profileBtn = document.getElementById('profileBtn');
+            const profileModal = document.getElementById('profileModal');
+            const startTrainingBtn = document.getElementById('startTrainingBtn');
+            const startTrainingModal = document.getElementById('startTrainingModal');
+            const startCameraBtn = document.getElementById('startCameraBtn');
+            const closeModalButtons = document.querySelectorAll('.close-modal, .btn-secondary');
+            const profileForm = document.getElementById('profileForm');
+            const confirmTrainingBtn = document.getElementById('confirmTrainingBtn');
+            const feedbackMessage = document.getElementById('feedbackMessage');
+
+            // Open Profile Modal
+            profileBtn.addEventListener('click', () => {
+                profileModal.style.display = 'flex';
+            });
+
+            // Open Start Training Modal
+            startTrainingBtn.addEventListener('click', () => {
+                startTrainingModal.style.display = 'flex';
+            });
+
+            // Start Camera for Posture Detection
+            startCameraBtn.addEventListener('click', () => {
+                feedbackMessage.textContent = "Initializing camera and AI posture detection...";
+                // In a real implementation, this would initialize MediaPipe and OpenCV
+                setTimeout(() => {
+                    feedbackMessage.innerHTML = "<span style='color: var(--success);'>✓ Camera activated successfully!</span><br>AI is now analyzing your posture. Try performing a squat to see real-time feedback.";
+                }, 2000);
+            });
+
+            // Confirm Training Start
+            confirmTrainingBtn.addEventListener('click', () => {
+                startTrainingModal.style.display = 'none';
+                feedbackMessage.textContent = "Initializing camera and AI posture detection...";
+                setTimeout(() => {
+                    feedbackMessage.innerHTML = "<span style='color: var(--success);'>✓ Camera activated successfully!</span><br>AI is now analyzing your posture. Try performing a squat to see real-time feedback.";
+                }, 2000);
+            });
+
+            // Close Modals
+            closeModalButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    profileModal.style.display = 'none';
+                    startTrainingModal.style.display = 'none';
+                });
+            });
+
+            // Handle Profile Form Submission
+            profileForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Profile saved successfully!');
+                profileModal.style.display = 'none';
+            });
+
+            // Handle Goal Card Clicks
+            const goalCards = document.querySelectorAll('.goal-card');
+            goalCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const goal = card.getAttribute('data-goal');
+                    alert(`You selected the ${goal.replace('-', ' ')} goal! This would open a detailed page in a full implementation.`);
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === profileModal) {
+                    profileModal.style.display = 'none';
+                }
+                if (e.target === startTrainingModal) {
+                    startTrainingModal.style.display = 'none';
+                }
+            });
+
+            // Simulate AI feedback changes
+            setInterval(() => {
+                if (feedbackMessage.textContent.includes("squat")) {
+                    const messages = [
+                        "Good form! Keep your back straight as you lower down.",
+                        "Try to keep your knees behind your toes during the squat.",
+                        "Excellent depth! You're hitting the perfect squat position.",
+                        "Remember to engage your core throughout the movement."
+                    ];
+                    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                    feedbackMessage.innerHTML = `<span style="color: var(--accent);">AI Feedback:</span> ${randomMessage}`;
+                }
+            }, 5000);
+        });
+    </script>
+
+    <script>
+        // MediaPipe Pose Detection Integration
+        class PoseDetector {
+            constructor() {
+                this.isInitialized = false;
+                this.videoElement = null;
+                this.canvasElement = null;
+            }
+
+            async initialize() {
+                // This will contain the actual MediaPipe code
+                console.log("Initializing pose detection...");
+                
+                // Placeholder for real implementation
+                this.isInitialized = true;
+                return true;
+            }
+
+            startDetection() {
+                if (!this.isInitialized) {
+                    console.error("Pose detector not initialized");
+                    return;
+                }
+                console.log("Starting pose detection...");
+            }
+
+            stopDetection() {
+                console.log("Stopping pose detection...");
+            }
+        }
+
+        // Initialize when page loads
+        const poseDetector = new PoseDetector();
+    </script>
+
+    <script>
+        // User Profile Management
+        class UserProfile {
+            constructor() {
+                this.profile = this.loadProfile() || this.getDefaultProfile();
+            }
+
+            getDefaultProfile() {
+                return {
+                    name: "John Doe",
+                    email: "",
+                    age: "",
+                    height: "",
+                    weight: "",
+                    gender: "",
+                    fitnessGoal: "",
+                    injuries: "",
+                    joinDate: new Date().toISOString()
+                };
+            }
+
+            saveProfile(profileData) {
+                this.profile = {...this.profile, ...profileData};
+                localStorage.setItem('fitAIProfile', JSON.stringify(this.profile));
+                this.updateProfileDisplay();
+            }
+
+            loadProfile() {
+                return JSON.parse(localStorage.getItem('fitAIProfile'));
+            }
+
+            updateProfileDisplay() {
+                const profileImg = document.getElementById('profileBtn');
+                if (profileImg && this.profile.name) {
+                    profileImg.textContent = this.profile.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                }
+            }
+
+            getWorkoutPlan() {
+                // Generate personalized plan based on profile
+                return this.generatePlan();
+            }
+
+            generatePlan() {
+                // This would generate a custom workout plan
+                return {
+                    goal: this.profile.fitnessGoal,
+                    difficulty: 'beginner',
+                    workouts: []
+                };
+            }
+        }
+
+        // Initialize user profile
+        const userProfile = new UserProfile();
+    </script>
+
+    <script>
+        // Exercise Form Analysis and Feedback
+        class ExerciseAnalyzer {
+            constructor() {
+                this.currentExercise = null;
+                this.feedbackHistory = [];
+            }
+
+            // Analyze squat form
+            analyzeSquat(landmarks) {
+                const feedback = [];
+                
+                // Get key landmarks
+                const leftShoulder = landmarks[11];
+                const leftHip = landmarks[23];
+                const leftKnee = landmarks[25];
+                const leftAnkle = landmarks[27];
+                const leftHeel = landmarks[29];
+
+                // Calculate angles
+                const kneeAngle = this.calculateAngle(leftHip, leftKnee, leftAnkle);
+                const hipAngle = this.calculateAngle(leftShoulder, leftHip, leftKnee);
+
+                // Provide feedback based on angles
+                if (kneeAngle < 80) {
+                    feedback.push("Great depth! You're getting a full range of motion.");
+                } else if (kneeAngle > 100) {
+                    feedback.push("Try to go deeper. Aim for at least 90 degrees at the knees.");
+                }
+
+                if (hipAngle < 170) {
+                    feedback.push("Good hip hinge. Maintaining proper back position.");
+                }
+
+                // Check knee position relative to toes
+                if (this.isKneeOverToe(leftKnee, leftAnkle)) {
+                    feedback.push("Watch your knee position - try to keep knees behind toes.");
+                }
+
+                return feedback.length > 0 ? feedback : ["Perfect form! Keep it up!"];
+            }
+
+            // Analyze push-up form
+            analyzePushup(landmarks) {
+                const feedback = [];
+                
+                const leftShoulder = landmarks[11];
+                const leftElbow = landmarks[13];
+                const leftWrist = landmarks[15];
+                const leftHip = landmarks[23];
+
+                // Check body alignment
+                const bodyAngle = this.calculateAngle(leftShoulder, leftHip, leftWrist);
+                
+                if (bodyAngle < 160) {
+                    feedback.push("Keep your body straight - don't let your hips sag.");
+                }
+
+                // Check elbow position
+                const elbowAngle = this.calculateAngle(leftShoulder, leftElbow, leftWrist);
+                if (elbowAngle > 90) {
+                    feedback.push("Good range! You're going deep enough.");
+                }
+
+                return feedback.length > 0 ? feedback : ["Excellent push-up form!"];
+            }
+
+            // Calculate angle between three points
+            calculateAngle(pointA, pointB, pointC) {
+                const AB = Math.sqrt(Math.pow(pointB.x - pointA.x, 2) + Math.pow(pointB.y - pointA.y, 2));
+                const BC = Math.sqrt(Math.pow(pointB.x - pointC.x, 2) + Math.pow(pointB.y - pointC.y, 2));
+                const AC = Math.sqrt(Math.pow(pointC.x - pointA.x, 2) + Math.pow(pointC.y - pointA.y, 2));
+                
+                const angle = Math.acos((BC * BC + AB * AB - AC * AC) / (2 * BC * AB));
+                return angle * (180 / Math.PI);
+            }
+
+            // Check if knee is over toe
+            isKneeOverToe(knee, ankle) {
+                return knee.x > ankle.x; // Simplified check
+            }
+
+            // Log feedback for progress tracking
+            logFeedback(exercise, feedback, timestamp = new Date()) {
+                this.feedbackHistory.push({
+                    exercise,
+                    feedback,
+                    timestamp,
+                    severity: this.calculateSeverity(feedback)
+                });
+                
+                // Keep only last 100 entries
+                if (this.feedbackHistory.length > 100) {
+                    this.feedbackHistory.shift();
+                }
+            }
+
+            calculateSeverity(feedback) {
+                const warningKeywords = ['watch', 'careful', 'avoid', 'don\'t', 'warning'];
+                const criticalKeywords = ['stop', 'danger', 'injury', 'pain'];
+                
+                const feedbackText = feedback.join(' ').toLowerCase();
+                
+                if (criticalKeywords.some(keyword => feedbackText.includes(keyword))) {
+                    return 'critical';
+                } else if (warningKeywords.some(keyword => feedbackText.includes(keyword))) {
+                    return 'warning';
+                }
+                return 'positive';
+            }
+
+            // Get common form issues for an exercise
+            getCommonIssues(exercise) {
+                const commonIssues = {
+                    'squat': [
+                        "Knees caving inward",
+                        "Heels lifting off ground",
+                        "Back rounding",
+                        "Not reaching parallel"
+                    ],
+                    'pushup': [
+                        "Hips sagging",
+                        "Elbows flaring out",
+                        "Not going full range",
+                        "Neck straining"
+                    ],
+                    'plank': [
+                        "Hips too high",
+                        "Hips sagging",
+                        "Shoulders not over wrists",
+                        "Head dropping"
+                    ]
+                };
+                
+                return commonIssues[exercise] || [];
+            }
+        }
+
+        // Initialize exercise analyzer
+        const exerciseAnalyzer = new ExerciseAnalyzer();
+    </script>
+
+    <script>
+        // Progress Tracking and Analytics
+        class ProgressTracker {
+            constructor() {
+                this.workoutHistory = JSON.parse(localStorage.getItem('fitAIWorkoutHistory')) || [];
+                this.achievements = JSON.parse(localStorage.getItem('fitAIAchievements')) || [];
+                this.workoutStreak = parseInt(localStorage.getItem('fitAIWorkoutStreak')) || 0;
+                this.lastWorkoutDate = localStorage.getItem('fitAILastWorkoutDate');
+                
+                this.initializeAchievements();
+            }
+
+            // Log a completed workout
+            logWorkout(workoutData) {
+                const workout = {
+                    id: this.generateId(),
+                    date: new Date().toISOString(),
+                    duration: workoutData.duration || 0,
+                    exercises: workoutData.exercises || [],
+                    calories: workoutData.calories || 0,
+                    feedback: workoutData.feedback || [],
+                    rating: workoutData.rating || 0
+                };
+
+                this.workoutHistory.push(workout);
+                this.updateStreak();
+                this.checkAchievements();
+                this.saveToStorage();
+                
+                return workout;
+            }
+
+            // Update workout streak
+            updateStreak() {
+                const today = new Date().toDateString();
+                const yesterday = new Date(Date.now() - 86400000).toDateString();
+                
+                if (this.lastWorkoutDate === today) {
+                    return; // Already logged today
+                }
+                
+                if (this.lastWorkoutDate === yesterday) {
+                    this.workoutStreak++;
+                } else if (!this.lastWorkoutDate || this.lastWorkoutDate !== today) {
+                    this.workoutStreak = 1;
+                }
+                
+                this.lastWorkoutDate = today;
+            }
+
+            // Check and award achievements
+            checkAchievements() {
+                const achievementsToCheck = [
+                    {
+                        id: 'first_workout',
+                        check: () => this.workoutHistory.length >= 1,
+                        title: 'First Steps',
+                        description: 'Complete your first workout',
+                        icon: '🏆'
+                    },
+                    {
+                        id: 'week_streak',
+                        check: () => this.workoutStreak >= 7,
+                        title: 'Weekly Warrior',
+                        description: 'Work out for 7 consecutive days',
+                        icon: '🔥'
+                    },
+                    {
+                        id: 'month_streak',
+                        check: () => this.workoutStreak >= 30,
+                        title: 'Fitness Devotee',
+                        description: 'Work out for 30 consecutive days',
+                        icon: '💪'
+                    },
+                    {
+                        id: 'perfectionist',
+                        check: () => this.workoutHistory.some(w => w.rating >= 4.5),
+                        title: 'Form Master',
+                        description: 'Achieve perfect form in a workout',
+                        icon: '⭐'
+                    }
+                ];
+
+                achievementsToCheck.forEach(achievement => {
+                    if (achievement.check() && !this.achievements.find(a => a.id === achievement.id)) {
+                        this.achievements.push({
+                            id: achievement.id,
+                            title: achievement.title,
+                            description: achievement.description,
+                            icon: achievement.icon,
+                            unlocked: new Date().toISOString()
+                        });
+                        
+                        this.showAchievementNotification(achievement);
+                    }
+                });
+            }
+
+            // Show achievement popup
+            showAchievementNotification(achievement) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = 'achievement-notification';
+                notification.innerHTML = `
+                    <div class="achievement-icon">${achievement.icon}</div>
+                    <div class="achievement-content">
+                        <h4>Achievement Unlocked!</h4>
+                        <h3>${achievement.title}</h3>
+                        <p>${achievement.description}</p>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove after 5 seconds
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 5000);
+            }
+
+            // Initialize default achievements
+            initializeAchievements() {
+                if (this.achievements.length === 0) {
+                    this.achievements = [];
+                }
+            }
+
+            // Generate unique ID
+            generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+
+            // Save to localStorage
+            saveToStorage() {
+                localStorage.setItem('fitAIWorkoutHistory', JSON.stringify(this.workoutHistory));
+                localStorage.setItem('fitAIAchievements', JSON.stringify(this.achievements));
+                localStorage.setItem('fitAIWorkoutStreak', this.workoutStreak.toString());
+                localStorage.setItem('fitAILastWorkoutDate', this.lastWorkoutDate);
+            }
+
+            // Get workout statistics
+            getStatistics() {
+                const totalWorkouts = this.workoutHistory.length;
+                const totalDuration = this.workoutHistory.reduce((sum, workout) => sum + workout.duration, 0);
+                const avgRating = this.workoutHistory.length > 0 
+                    ? this.workoutHistory.reduce((sum, workout) => sum + workout.rating, 0) / this.workoutHistory.length 
+                    : 0;
+                
+                return {
+                    totalWorkouts,
+                    totalDuration,
+                    avgRating: avgRating.toFixed(1),
+                    currentStreak: this.workoutStreak,
+                    achievements: this.achievements.length
+                };
+            }
+        }
+
+        // Initialize progress tracker
+        const progressTracker = new ProgressTracker();
+    </script>
+</body>
+</html>

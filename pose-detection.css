@@ -1,0 +1,48 @@
+/* Pose Detection Specific Styles */
+.pose-detection {
+    padding: 5rem 2rem;
+    background-color: #f0f4ff;
+}
+
+.detection-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.detection-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.video-container {
+    flex: 1;
+    min-width: 300px;
+    background-color: var(--dark);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.video-placeholder {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(45deg, #2c2c2c, #4a4a4a);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.feedback-panel {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
